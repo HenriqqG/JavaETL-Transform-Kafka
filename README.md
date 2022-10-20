@@ -61,7 +61,7 @@ Lets use this, as an example:
 >{"id":"145","timeStamp":"1666283233","clientIp":"187.113.21.122"}
 
 You should see on our IDE's console the confirmation that we received the input and it's now ready to execute the request to our IpStack API. 
-After a few seconds, both in consumer's command Prompt and IDE's console, we should see the response in a similar format:
+After a few seconds, we should see the response in a similar format in the consumer's command Prompt:
 
 >{ \
 >"id":"145", \
