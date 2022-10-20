@@ -1,6 +1,7 @@
 package myapps;
 
 import myapps.evento.*;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.Consumed;
@@ -9,6 +10,7 @@ import org.apache.kafka.streams.kstream.Produced;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 import java.io.IOException;
@@ -57,13 +59,7 @@ public class Main {
                 ).peek(
                         (k, v) -> System.out.println(v.printInformacaoCliente())
                 ).map(
-                        (k, v) -> {
-                            try {
-                                return new KeyValue<>(k, buildRetornoAPI(v));
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                        (k, v) -> new KeyValue<>(k, buildRetornoAPI(v))
                 ).peek(
                         (k, v) -> System.out.println(v.printRetornoAPI())
                 );
@@ -72,19 +68,26 @@ public class Main {
         configAndRun(builder);
     }
 
-    private static RetornoAPI buildRetornoAPI(InformacaoCliente informacaoCliente) throws IOException {
-        String accessKey = "088d4a51a0c974748455efe60d30f70c";
-        String url = "http://api.ipstack.com/"+informacaoCliente.getClientIp()+"?access_key="+accessKey;
-        String method = "GET";
+    private static RetornoAPI buildRetornoAPI(InformacaoCliente informacaoCliente){
+        if(!ObjectUtils.isEmpty(informacaoCliente.getClientIp())){
+            String accessKey = "088d4a51a0c974748455efe60d30f70c";
+            String url = "http://api.ipstack.com/"+informacaoCliente.getClientIp()+"?access_key="+accessKey;
+            String method = "GET";
 
-        JSONObject retornoConsulta = consumeJsonAPIFromUrl(url, method);
+            JSONObject retornoConsulta = consumeJsonAPIFromUrl(url, method);
 
-        return new RetornoAPI(informacaoCliente.getId(), informacaoCliente.getTimeStamp(), informacaoCliente.getClientIp(),
-                retornoConsulta.get("latitude").toString(),
-                retornoConsulta.get("longitude").toString(),
-                retornoConsulta.get("country_name").toString(),
-                retornoConsulta.get("region_name").toString(),
-                retornoConsulta.get("city").toString());
+            return new RetornoAPI(informacaoCliente.getId(), informacaoCliente.getTimeStamp(), informacaoCliente.getClientIp(),
+                    retornoConsulta.containsKey("latitude") ? retornoConsulta.get("latitude").toString() : null,
+                    retornoConsulta.containsKey("longitude") ? retornoConsulta.get("longitude").toString() : null,
+                    retornoConsulta.containsKey("country_name") ? retornoConsulta.get("country_name").toString() : null,
+                    retornoConsulta.containsKey("region_name") ? retornoConsulta.get("region_name").toString() : null,
+                    retornoConsulta.containsKey("city") ? retornoConsulta.get("city").toString() : null,
+                    retornoConsulta.containsKey("info") ? retornoConsulta.get("info").toString() : null);
+        }else{
+            return new RetornoAPI(null, null, null,
+                    null, null, null,
+                    null, null, "client Ip cannot be null");
+        }
     }
 
     private static JSONObject consumeJsonAPIFromUrl(String requestUrl, String requestMethod){
@@ -112,6 +115,18 @@ public class Main {
 
                 JSONParser jsonParser = new JSONParser();
                 dataObject = (JSONObject) jsonParser.parse(String.valueOf(retornoIpStackAPI));
+
+                if(dataObject.containsKey("error")){
+                    JSONParser parse = new JSONParser();
+                    JSONObject dataErrorObject;
+                    try {
+                        dataErrorObject = (JSONObject) parse.parse(String.valueOf(dataObject.get("error")));
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                    dataObject = dataErrorObject;
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -18,7 +18,9 @@ public class RetornoAPI {
     //City
     private String city;
 
-    public RetornoAPI(Long id, Long timeStamp, String clientIp, String latitude, String longitude, String country, String region, String city) {
+    private String error;
+
+    public RetornoAPI(Long id, Long timeStamp, String clientIp, String latitude, String longitude, String country, String region, String city, String error) {
         this.id = id;
         this.timeStamp = timeStamp;
         this.clientIp = clientIp;
@@ -27,6 +29,7 @@ public class RetornoAPI {
         this.country = country;
         this.region = region;
         this.city = city;
+        this.error = error;
     }
 
     public Long getId() {
@@ -93,14 +96,23 @@ public class RetornoAPI {
         this.city = city;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     public String printRetornoAPI(){
-        return ("{'id':'"+this.id+"'," +
+        return this.error == null ? ("{'id':'"+this.id+"'," +
                 "'timeStamp':'"+this.timeStamp+"'," +
                 "'clientIp':'"+this.clientIp+"'," +
                 "'latitude':'"+this.latitude+"'," +
                 "'longitude':'"+this.longitude+"'," +
                 "'country':'"+this.country+"'," +
                 "'region':'"+this.region+"'," +
-                "'city':'"+this.city+"'}");
+                "'city':'"+this.city+"'}")
+                : ("{'error':'"+this.error+"'}");
     }
 }
