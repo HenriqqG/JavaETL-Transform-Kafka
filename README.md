@@ -54,8 +54,8 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic streams-
 Back to our producer, just write:
 
 >{"id":"[CLIENT_ID]","timeStamp":"[TIME_MILLISECONDS]","clientIp":"[ANY_VALID_PUBLIC_IP_ADRESS]"} \
->//this input simulates a payload received from other microservice, with the ID of a Client \
->//The time in milliseconds since the UNIX epoch and his Public IP Adress
+
+This input will simulate a payload received from other microservice, with the ID of a Client, the time in milliseconds since the UNIX epoch and his Public IP Adress.
 
 Lets use this, as an example:
 >{"id":"145","timeStamp":"1666283233","clientIp":"187.113.21.122"}
