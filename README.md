@@ -61,7 +61,7 @@ Lets use this, as an example:
 >{"id":"145","timeStamp":"1666283233","clientIp":"187.113.21.122"}
 
 You should see on our IDE's console the confirmation that we received the input and it's now ready to execute the request to our IpStack API. 
-After a few seconds, both in consumer's command Prompt and IDE's console, we should see the response in the following format:
+After a few seconds, both in consumer's command Prompt and IDE's console, we should see the response in a similar format:
 
 >{ \
 >"id":"145", \
@@ -70,12 +70,15 @@ After a few seconds, both in consumer's command Prompt and IDE's console, we sho
 >"latitude":"-16.68977928161621", \
 >"longitude":"-49.26816177368164", \
 >"country":"Brazil", \
->"region":"Goiás", \
->"city":"Goiânia" \
->"error":"null" \
+>"region":"Goias", \
+>"city":"Goiania" \
 >}
 
-Any errors that may occur should appear on the "error" key.
+or something like this, if it returns an error:
+
+>{ \
+>"error":"invalid_ip_address" \
+>}
 
 ### That concludes our brief explanation on how the code works!
 
