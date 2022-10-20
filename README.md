@@ -58,20 +58,21 @@ Back to our producer, just write:
 >//The time in milliseconds since the UNIX epoch and his Public IP Adress
 
 Lets use this, as an example:
->{'id':'145','timeStamp':'1666283233','clientIp':'187.113.21.122'}
+>{"id":"145","timeStamp":"1666283233","clientIp":"187.113.21.122"}
 
 You should see on our IDE's console the confirmation that we received the input and it's now ready to execute the request to our IpStack API. 
 After a few seconds, both in consumer's command Prompt and IDE's console, we should see the response in the following format:
 
 >{ \
->'id':'145', \
->'timeStamp':'1666283233', \
->'clientIp':'187.113.21.122', \
->'latitude':'-16.68977928161621', \
->'longitude':'-49.26816177368164', \
->'country':'Brazil', \
->'region':'Goiás', \
->'city':'Goiânia' \
+>"id":"145", \
+>"timeStamp":"1666283233", \
+>"clientIp":"187.113.21.122", \
+>"latitude":"-16.68977928161621", \
+>"longitude":"-49.26816177368164", \
+>"country":"Brazil", \
+>"region":"Goiás", \
+>"city":"Goiânia" \
+>"error":"null" \
 >}
 
 ### That concludes our brief explanation on how to code works!
