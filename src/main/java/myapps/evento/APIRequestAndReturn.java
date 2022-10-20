@@ -7,30 +7,34 @@ import org.json.simple.parser.ParseException;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.Normalizer;
 import java.util.Scanner;
 
 public class APIRequestAndReturn {
 
-    public RetornoAPI buildRetornoAPI(InformacaoCliente informacaoCliente){
-        if(!ObjectUtils.isEmpty(informacaoCliente.getClientIp())){
-            String accessKey = "088d4a51a0c974748455efe60d30f70c";
-            String url = "http://api.ipstack.com/"+informacaoCliente.getClientIp()+"?access_key="+accessKey;
-            String method = "GET";
+    public JSONObject buildRetornoAPI(InformacaoCliente informacaoCliente){
+        String ip = ObjectUtils.isEmpty(informacaoCliente.getClientIp()) ? null : informacaoCliente.getClientIp();
+        String accessKey = "088d4a51a0c974748455efe60d30f70c";
+        String url = "http://api.ipstack.com/"+ip+"?access_key="+accessKey;
+        String method = "GET";
 
-            JSONObject retornoConsulta = consumeJsonAPIFromUrl(url, method);
+        JSONObject retornoConsulta = consumeJsonAPIFromUrl(url, method);
+        JSONObject jsonObject = new JSONObject();
 
-            return new RetornoAPI(informacaoCliente.getId(), informacaoCliente.getTimeStamp(), informacaoCliente.getClientIp(),
-                    retornoConsulta.containsKey("latitude") ? retornoConsulta.get("latitude").toString() : null,
-                    retornoConsulta.containsKey("longitude") ? retornoConsulta.get("longitude").toString() : null,
-                    retornoConsulta.containsKey("country_name") ? retornoConsulta.get("country_name").toString() : null,
-                    retornoConsulta.containsKey("region_name") ? retornoConsulta.get("region_name").toString() : null,
-                    retornoConsulta.containsKey("city") ? retornoConsulta.get("city").toString() : null,
-                    retornoConsulta.containsKey("info") ? retornoConsulta.get("info").toString() : null);
+        if(!retornoConsulta.containsKey("info")){
+            jsonObject.put("id", informacaoCliente.getId());
+            jsonObject.put("timeStamp", informacaoCliente.getTimeStamp());
+            jsonObject.put("clientIp", retornoConsulta.get("ip"));
+            jsonObject.put("latitude", retornoConsulta.get("latitude"));
+            jsonObject.put("longitude", retornoConsulta.get("longitude"));
+            jsonObject.put("country", regexString(retornoConsulta.get("country_name").toString()));
+            jsonObject.put("region", regexString(retornoConsulta.get("region_name").toString()));
+            jsonObject.put("city", regexString(retornoConsulta.get("city").toString()));
         }else{
-            return new RetornoAPI(null, null, null,
-                    null, null, null,
-                    null, null, "Client IP cannot be null");
+            jsonObject.put("error", retornoConsulta.get("info"));
         }
+
+        return jsonObject;
     }
 
     public JSONObject consumeJsonAPIFromUrl(String requestUrl, String requestMethod){
@@ -48,16 +52,16 @@ public class APIRequestAndReturn {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             } else {
 
-                StringBuilder retornoIpStackAPI = new StringBuilder();
+                StringBuilder retornoAPIRequest = new StringBuilder();
                 Scanner scanner = new Scanner(url.openStream());
 
                 while (scanner.hasNext()) {
-                    retornoIpStackAPI.append(scanner.nextLine());
+                    retornoAPIRequest.append(scanner.nextLine());
                 }
                 scanner.close();
 
                 JSONParser jsonParser = new JSONParser();
-                dataObject = (JSONObject) jsonParser.parse(String.valueOf(retornoIpStackAPI));
+                dataObject = (JSONObject) jsonParser.parse(String.valueOf(retornoAPIRequest));
 
                 if(dataObject.containsKey("error")){
                     JSONParser parse = new JSONParser();
@@ -75,6 +79,10 @@ public class APIRequestAndReturn {
             e.printStackTrace();
         }
         return dataObject;
+    }
+
+    private String regexString(String src){
+        return Normalizer.normalize(src, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
 }

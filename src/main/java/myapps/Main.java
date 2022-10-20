@@ -1,18 +1,19 @@
 package myapps;
 
 import myapps.evento.*;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Produced;
+import org.json.simple.JSONObject;
 
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
 public class Main {
-    private static void configAndRun(StreamsBuilder builder){
+    private static void configAndRun(StreamsBuilder builder)
+    {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-challenge");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
@@ -45,17 +46,15 @@ public class Main {
 
         final StreamsBuilder builder = new StreamsBuilder();
         APIRequestAndReturn apiRequestAndReturn = new APIRequestAndReturn();
-        KStream<String, RetornoAPI> source = builder
+        KStream<String, JSONObject> source = builder
                 .stream("streams-informacaocliente-input",
                         Consumed.with(Serdes.String(), new InformacaoClienteSerde())
                 ).peek(
                         (k, v) -> System.out.println(v.printInformacaoCliente())
                 ).map(
                         (k, v) -> new KeyValue<>(k, apiRequestAndReturn.buildRetornoAPI(v))
-                ).peek(
-                        (k, v) -> System.out.println(v.printRetornoAPI())
                 );
-        source.to("streams-retornoapi-output", Produced.with(Serdes.String(), new RetornoAPISerde()));
+        source.to("streams-retornoapi-output", Produced.with(Serdes.String(), new JSONObjectSerde()));
 
         configAndRun(builder);
     }
