@@ -42,11 +42,11 @@ mvn clean package
 ```
 Now, just execute our main function and, in two separate command Prompts, let's run our producer and consumer with the topics previously created.
 
-### For our producer, write:
+### For the producer, write:
 ```
 bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic streams-informacaocliente-input
 ```
-### For our consumer, write:
+### For the consumer, write:
 ```
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic streams-retornoapi-output --from-beginning
 ```
