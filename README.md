@@ -75,5 +75,7 @@ After a few seconds, both in consumer's command Prompt and IDE's console, we sho
 >"error":"null" \
 >}
 
-### That concludes our brief explanation on how to code works!
+Any errors that may occur should appear on the "error" key.
+
+### That concludes our brief explanation on how the code works!
 
