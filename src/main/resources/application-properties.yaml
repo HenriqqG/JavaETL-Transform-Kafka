@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  kafka:
+    bootstrap-servers: http://localhost:9092
+    properties:
+      security.protocol: PLAINTEXT
+    producer:
+      topic: streams-javaetl-load
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: streams.examples.kafkaconsumer.common.serde.JsonSerializer
+    consumer:
+      topic: streams-javaetl-extract
+      group-id: streams-javaetl-extract
+      concurrency: 3
+    back-off:
+      retries: 2
+      interval: 1000
+api:
+  ip-stack:
+    url: "http://api.ipstack.com";
+    access-key: "088d4a51a0c974748455efe60d30f70c";
