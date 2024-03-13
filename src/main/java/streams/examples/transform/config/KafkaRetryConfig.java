@@ -1,4 +1,4 @@
-package streams.examples.kafkaconsumer.config;
+package streams.examples.transform.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -26,7 +26,7 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.lang.NonNull;
 import org.springframework.util.backoff.FixedBackOff;
-import streams.examples.kafkaconsumer.entity.dto.InformacaoClienteDTO;
+import streams.examples.transform.entity.dto.InformacaoClienteDTO;
 
 import java.util.HashMap;
 

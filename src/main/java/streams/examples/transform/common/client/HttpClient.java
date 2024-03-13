@@ -1,4 +1,4 @@
-package streams.examples.kafkaconsumer.common.client;
+package streams.examples.transform.common.client;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

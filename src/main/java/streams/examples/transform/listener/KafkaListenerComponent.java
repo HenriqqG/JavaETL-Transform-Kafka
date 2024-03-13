@@ -1,4 +1,4 @@
-package streams.examples.kafkaconsumer.listener;
+package streams.examples.transform.listener;
 
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -12,12 +12,11 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
-import streams.examples.kafkaconsumer.common.client.APIClient;
-import streams.examples.kafkaconsumer.entity.InformacaoCliente;
-import streams.examples.kafkaconsumer.entity.dto.InformacaoClienteDTO;
+import streams.examples.transform.common.client.APIClient;
+import streams.examples.transform.entity.InformacaoCliente;
+import streams.examples.transform.entity.dto.InformacaoClienteDTO;
 
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 

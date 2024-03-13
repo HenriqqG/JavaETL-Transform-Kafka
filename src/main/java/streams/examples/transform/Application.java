@@ -1,4 +1,4 @@
-package streams.examples.kafkaconsumer;
+package streams.examples.transform;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

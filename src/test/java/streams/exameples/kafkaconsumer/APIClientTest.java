@@ -3,11 +3,11 @@ package streams.exameples.kafkaconsumer;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import streams.exameples.kafkaconsumer.util.InformacaoClienteTestFactory;
-import streams.examples.kafkaconsumer.common.client.APIClient;
-import streams.examples.kafkaconsumer.entity.InformacaoCliente;
+import streams.examples.transform.common.client.APIClient;
+import streams.examples.transform.entity.InformacaoCliente;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
-import streams.examples.kafkaconsumer.entity.dto.InformacaoClienteDTO;
+import streams.examples.transform.entity.dto.InformacaoClienteDTO;
 
 import java.io.BufferedReader;
 import java.io.IOException;

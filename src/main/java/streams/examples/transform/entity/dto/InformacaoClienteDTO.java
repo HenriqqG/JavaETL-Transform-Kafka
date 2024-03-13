@@ -1,3 +1,3 @@
-package streams.examples.kafkaconsumer.entity.dto;
+package streams.examples.transform.entity.dto;
 
 public record InformacaoClienteDTO (Long id, Long timeStamp, String clientIp) {}

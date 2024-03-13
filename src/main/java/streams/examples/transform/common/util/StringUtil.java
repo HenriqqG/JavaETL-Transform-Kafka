@@ -1,4 +1,4 @@
-package streams.examples.kafkaconsumer.common.util;
+package streams.examples.transform.common.util;
 
 import java.text.Normalizer;
 public abstract class StringUtil {

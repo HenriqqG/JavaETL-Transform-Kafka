@@ -1,10 +1,10 @@
-package streams.examples.kafkaconsumer.entity;
+package streams.examples.transform.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import streams.examples.kafkaconsumer.entity.dto.InformacaoClienteDTO;
+import streams.examples.transform.entity.dto.InformacaoClienteDTO;
 
 @Getter
 @Setter

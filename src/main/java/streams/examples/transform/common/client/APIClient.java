@@ -1,8 +1,8 @@
-package streams.examples.kafkaconsumer.common.client;
+package streams.examples.transform.common.client;
 
 import org.springframework.beans.factory.annotation.Value;
-import streams.examples.kafkaconsumer.common.util.StringUtil;
-import streams.examples.kafkaconsumer.entity.InformacaoCliente;
+import streams.examples.transform.common.util.StringUtil;
+import streams.examples.transform.entity.InformacaoCliente;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;

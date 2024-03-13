@@ -1,7 +1,6 @@
 package streams.exameples.kafkaconsumer.util;
 
-import streams.examples.kafkaconsumer.entity.InformacaoCliente;
-import streams.examples.kafkaconsumer.entity.dto.InformacaoClienteDTO;
+import streams.examples.transform.entity.dto.InformacaoClienteDTO;
 
 public class InformacaoClienteTestFactory {
     public static InformacaoClienteDTO createInformacaoClienteDTO(String ip) {
